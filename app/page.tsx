@@ -249,7 +249,7 @@ const WaitlistSection = () => (
     <div className="max-w-4xl mx-auto text-center relative z-10">
       <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs md:text-sm font-bold mb-4 md:mb-8 animate-float-fast">
         <Sparkles className="w-3 md:w-4 h-3 md:h-4" />
-        <span>Join 2,000+ others</span>
+        <span>Join 200+ others</span>
       </div>
       <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-zinc-900 mb-4 md:mb-8 leading-[0.9]">
         Get early access.
