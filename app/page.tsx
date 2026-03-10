@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Zap,
   ArrowRight,
@@ -44,12 +45,20 @@ const Nav = () => (
           Flow
         </a>
       </div>
-      <a
-        href="#waitlist"
-        className="px-5 py-2.5 rounded-xl bg-violet-500 text-white text-sm font-bold hover:bg-violet-400 transition-colors"
-      >
-        Get early access
-      </a>
+      <div className="flex items-center gap-2">
+        <Link
+          href="/login"
+          className="px-4 py-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 text-sm font-medium transition-colors"
+        >
+          Log in
+        </Link>
+        <Link
+          href="/signup"
+          className="px-5 py-2.5 rounded-xl bg-violet-500 text-white text-sm font-bold hover:bg-violet-400 transition-colors"
+        >
+          Get started
+        </Link>
+      </div>
     </nav>
   </motion.header>
 );
