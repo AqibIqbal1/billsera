@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -251,72 +252,125 @@ const FlowSection = () => (
 );
 
 // --- Waitlist ---
-const WaitlistSection = () => (
-  <section
-    id="waitlist"
-    className="relative py-28 md:py-36 px-4 md:px-8 section-band"
-  >
-    <div className="absolute inset-0 gradient-mesh opacity-60" />
-    <div className="relative max-w-2xl mx-auto text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full surface text-violet-400 text-sm font-medium mb-6"
-      >
-        <Sparkles className="w-4 h-4" />
-        200+ on the list
-      </motion.div>
-      <motion.h2
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-3xl md:text-5xl font-black text-zinc-100 mb-4 tracking-tight"
-      >
-        Get in before everyone else.
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-zinc-500 mb-10 leading-relaxed"
-      >
-        We’ll only email you when we launch. No spam, ever.
-      </motion.p>
+const WaitlistSection = () => {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
+  const [message, setMessage] = useState<string | null>(null);
 
-      <motion.form
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        onSubmit={(e) => e.preventDefault()}
-        className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-      >
-        <input
-          type="email"
-          placeholder="you@company.com"
-          required
-          aria-label="Email for waitlist"
-          className="flex-1 px-5 py-4 rounded-2xl bg-white/[0.04] border border-white/10 text-zinc-100 placeholder:text-zinc-500 font-medium outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
-        />
-        <button
-          type="submit"
-          className="px-8 py-4 rounded-2xl bg-violet-500 text-white font-bold hover:bg-violet-400 transition-colors shadow-lg shadow-violet-500/20"
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    setMessage(null);
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as {
+        message?: string;
+      };
+
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      setStatus("success");
+      setMessage("You’re on the list. We’ll be in touch.");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+      setMessage(
+        err instanceof Error ? err.message : "Could not join waitlist. Try again."
+      );
+    }
+  }
+
+  return (
+    <section
+      id="waitlist"
+      className="relative py-28 md:py-36 px-4 md:px-8 section-band"
+    >
+      <div className="absolute inset-0 gradient-mesh opacity-60" />
+      <div className="relative max-w-2xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full surface text-violet-400 text-sm font-medium mb-6"
         >
-          Join
-        </button>
-      </motion.form>
+          <Sparkles className="w-4 h-4" />
+          200+ on the list
+        </motion.div>
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-3xl md:text-5xl font-black text-zinc-100 mb-4 tracking-tight"
+        >
+          Get in before everyone else.
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-zinc-500 mb-10 leading-relaxed"
+        >
+          We’ll only email you when we launch. No spam, ever.
+        </motion.p>
 
-      <div className="mt-8 flex items-center justify-center gap-6 text-zinc-500 text-sm">
-        <span className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500/70" /> No spam
-        </span>
-        <span className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-500/70" /> Unsubscribe anytime
-        </span>
+        <motion.form
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+        >
+          <input
+            type="email"
+            placeholder="you@company.com"
+            required
+            aria-label="Email for waitlist"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="flex-1 px-5 py-4 rounded-2xl bg-white/[0.04] border border-white/10 text-zinc-100 placeholder:text-zinc-500 font-medium outline-none focus:border-violet-500/40 focus:ring-1 focus:ring-violet-500/20 transition-all"
+          />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="px-8 py-4 rounded-2xl bg-violet-500 text-white font-bold hover:bg-violet-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-lg shadow-violet-500/20"
+          >
+            {status === "loading" ? "Joining..." : "Join"}
+          </button>
+        </motion.form>
+
+        {message && (
+          <p
+            className={`mt-4 text-sm ${
+              status === "success" ? "text-emerald-400" : "text-red-400"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
+        <div className="mt-8 flex items-center justify-center gap-6 text-zinc-500 text-sm">
+          <span className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500/70" /> No spam
+          </span>
+          <span className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500/70" /> Unsubscribe anytime
+          </span>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+}
 
 export default function Home() {
   return (
