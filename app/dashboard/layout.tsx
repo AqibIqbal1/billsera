@@ -175,9 +175,7 @@ export default function DashboardLayout({
             }`}
             title={sidebarCollapsed ? "Logout" : undefined}
           >
-            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold text-sm shrink-0">
-              N
-            </div>
+            <LogOut className="w-5 h-5 text-red-400 shrink-0" />
             {!sidebarCollapsed && (
               <span className="text-sm font-medium">Logout</span>
             )}
@@ -237,9 +235,7 @@ export default function DashboardLayout({
             }}
             className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 text-sm font-medium"
           >
-            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold text-sm">
-              N
-            </div>
+            <LogOut className="w-5 h-5 text-red-400 shrink-0" />
             Logout
           </button>
         </div>

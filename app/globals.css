@@ -259,6 +259,15 @@
   background-color: #f4f4f5 !important;
 }
 
+/* Table row borders in light mode – make lines visible */
+.admin-panel[data-theme="light"] .admin-main tbody tr {
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-main thead tr {
+  border-bottom: 1px solid #e4e4e7;
+}
+
 /* Status pills in light mode – pastel bg + dark text */
 .admin-panel[data-theme="light"] .admin-main span[class*="bg-emerald"] {
   background: #d1fae5 !important;
