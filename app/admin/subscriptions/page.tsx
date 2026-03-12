@@ -77,7 +77,7 @@ export default function AdminSubscriptionsPage() {
         <span className="font-medium text-zinc-100">{sub.tenant}</span>
       ),
       plan: (
-        <span className="text-sm text-zinc-300">{sub.plan}</span>
+        <span className="text-sm font-medium text-zinc-100">{sub.plan}</span>
       ),
       revenue: (
         <span className="text-sm text-zinc-100 font-medium">

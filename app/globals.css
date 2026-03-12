@@ -97,3 +97,240 @@
   .animate-float-subtle,
   .animate-pulse-glow { animation: none; }
 }
+
+/* Admin panel – light mode */
+.admin-panel[data-theme="light"] {
+  background: #f4f4f5 !important;
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] .admin-sidebar-desktop,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile {
+  background: #ffffff;
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-sidebar-desktop .border-white\/6,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile .border-white\/6 {
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-sidebar-desktop a,
+.admin-panel[data-theme="light"] .admin-sidebar-desktop button,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile a,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile button {
+  color: #52525b;
+}
+
+.admin-panel[data-theme="light"] .admin-sidebar-desktop a:hover,
+.admin-panel[data-theme="light"] .admin-sidebar-desktop button:hover,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile a:hover,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile button:hover {
+  color: #18181b;
+  background: #f4f4f5;
+}
+
+.admin-panel[data-theme="light"] .admin-sidebar-desktop a.bg-zinc-800,
+.admin-panel[data-theme="light"] .admin-sidebar-mobile a.bg-zinc-800 {
+  background: #e4e4e7 !important;
+  color: #18181b !important;
+}
+
+/* Apply light theme to any sidebar in admin or dashboard */
+.admin-panel[data-theme="light"] aside {
+  background: #ffffff;
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] aside a,
+.admin-panel[data-theme="light"] aside button {
+  color: #52525b;
+}
+
+.admin-panel[data-theme="light"] aside a:hover,
+.admin-panel[data-theme="light"] aside button:hover {
+  color: #18181b;
+  background: #f4f4f5;
+}
+
+.admin-panel[data-theme="light"] aside a.bg-zinc-800 {
+  background: #e4e4e7 !important;
+  color: #18181b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main {
+  background: #f4f4f5;
+}
+
+.admin-panel[data-theme="light"] .admin-header {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #e4e4e7;
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] .admin-header input {
+  background: #ffffff;
+  border-color: #e4e4e7;
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] .admin-header input::placeholder {
+  color: #71717a;
+}
+
+.admin-panel[data-theme="light"] .admin-header button {
+  color: #52525b;
+}
+
+.admin-panel[data-theme="light"] .admin-header button:hover {
+  color: #18181b;
+  background: #f4f4f5;
+}
+
+.admin-panel[data-theme="light"] .admin-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Light mode: dropdown and nav text in header */
+.admin-panel[data-theme="light"] .admin-header .text-zinc-300 {
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] [class*="rounded-xl"][class*="bg-zinc-900"] {
+  background: #ffffff !important;
+  border-color: #e4e4e7 !important;
+}
+
+.admin-panel[data-theme="light"] [class*="rounded-xl"][class*="bg-zinc-900"] button {
+  color: #52525b;
+}
+
+.admin-panel[data-theme="light"] [class*="rounded-xl"][class*="bg-zinc-900"] button:hover {
+  color: #18181b;
+  background: #f4f4f5 !important;
+}
+
+/* Admin main content – light mode (tables, cards, text) */
+.admin-panel[data-theme="light"] .admin-main .text-white,
+.admin-panel[data-theme="light"] .admin-main .text-zinc-100 {
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] .admin-main .bg-black,
+.admin-panel[data-theme="light"] .admin-main .bg-zinc-950 {
+  background: #ffffff;
+}
+
+.admin-panel[data-theme="light"] .admin-main .bg-zinc-900 {
+  background: #ffffff;
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-main .border-white\/\[0\.06\],
+.admin-panel[data-theme="light"] .admin-main .border-white\/6 {
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-main .text-zinc-500 {
+  color: #71717a;
+}
+
+.admin-panel[data-theme="light"] .admin-main .text-zinc-400 {
+  color: #52525b;
+}
+
+.admin-panel[data-theme="light"] .admin-main .surface {
+  background: #ffffff;
+  border-color: #e4e4e7;
+}
+
+.admin-panel[data-theme="light"] .admin-main input {
+  background: #ffffff;
+  border-color: #e4e4e7;
+  color: #18181b;
+}
+
+.admin-panel[data-theme="light"] .admin-main input::placeholder {
+  color: #71717a;
+}
+
+/* Table row hover in light mode */
+.admin-panel[data-theme="light"] .admin-main tbody tr:hover {
+  background-color: #f4f4f5 !important;
+}
+
+/* Status pills in light mode – pastel bg + dark text */
+.admin-panel[data-theme="light"] .admin-main span[class*="bg-emerald"] {
+  background: #d1fae5 !important;
+  color: #047857 !important;
+}
+.admin-panel[data-theme="light"] .admin-main span[class*="bg-amber"] {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+}
+.admin-panel[data-theme="light"] .admin-main span[class*="bg-red-500"] {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+.admin-panel[data-theme="light"] .admin-main span[class*="bg-zinc-500"] {
+  background: #e4e4e7 !important;
+  color: #52525b !important;
+}
+
+/* Buttons in light mode – content area */
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-zinc-900"],
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-zinc-950"],
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-black"] {
+  background: #ffffff !important;
+  border-color: #e4e4e7 !important;
+  color: #18181b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-zinc-900"]:hover,
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-zinc-950"]:hover,
+.admin-panel[data-theme="light"] .admin-main button[class*="bg-black"]:hover {
+  background: #f4f4f5 !important;
+  color: #18181b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button[class*="border-white"],
+.admin-panel[data-theme="light"] .admin-main button[class*="border-white/"] {
+  border-color: #e4e4e7 !important;
+  color: #18181b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button[class*="text-zinc-400"],
+.admin-panel[data-theme="light"] .admin-main button[class*="text-zinc-300"],
+.admin-panel[data-theme="light"] .admin-main button[class*="text-zinc-500"] {
+  color: #52525b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button[class*="text-zinc"]:hover,
+.admin-panel[data-theme="light"] .admin-main button[class*="hover:bg-zinc"]:hover {
+  color: #18181b !important;
+  background: #f4f4f5 !important;
+}
+
+/* Pagination / small utility buttons */
+.admin-panel[data-theme="light"] .admin-main button[class*="rounded-lg"] {
+  border-color: #e4e4e7 !important;
+  color: #52525b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button[class*="rounded-lg"]:hover:not(:disabled) {
+  background: #f4f4f5 !important;
+  color: #18181b !important;
+}
+
+/* Surface-style buttons (secondary) */
+.admin-panel[data-theme="light"] .admin-main button.surface,
+.admin-panel[data-theme="light"] .admin-main button[class*="surface"] {
+  background: #ffffff !important;
+  border-color: #e4e4e7 !important;
+  color: #18181b !important;
+}
+
+.admin-panel[data-theme="light"] .admin-main button.surface:hover,
+.admin-panel[data-theme="light"] .admin-main button[class*="surface"]:hover {
+  background: #f4f4f5 !important;
+}

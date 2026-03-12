@@ -14,6 +14,7 @@ import {
   Search,
   Bell,
   Sun,
+  Moon,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -37,6 +38,7 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     setMounted(true);
@@ -46,8 +48,20 @@ export default function DashboardLayout({
     if (mounted && typeof window !== "undefined") {
       const stored = localStorage.getItem("billsera_sidebar_collapsed");
       if (stored !== null) setSidebarCollapsed(stored === "true");
+      const t = localStorage.getItem("billsera_theme");
+      if (t === "light" || t === "dark") setTheme(t);
     }
   }, [mounted]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      if (typeof window !== "undefined") {
+        localStorage.setItem("billsera_theme", next);
+      }
+      return next;
+    });
+  };
 
   const toggleSidebar = () => {
     setSidebarCollapsed((prev) => {
@@ -81,9 +95,10 @@ export default function DashboardLayout({
 
   return (
     <div
-      className={`min-h-screen bg-black text-zinc-100 overflow-x-hidden md:overflow-x-visible ${
+      className={`admin-panel min-h-screen bg-black text-zinc-100 overflow-x-hidden md:overflow-x-visible ${
         sidebarCollapsed ? "md:pl-20" : "md:pl-64"
       }`}
+      data-theme={theme}
     >
       {/* Sidebar - desktop (collapsible, fixed) */}
       <aside
@@ -173,7 +188,7 @@ export default function DashboardLayout({
       {/* Mobile sidebar (overlay) */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          className="admin-overlay fixed inset-0 bg-black/60 z-40 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -231,8 +246,8 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main content – padding-left on root handles sidebar space */}
-      <div className="flex flex-col min-h-screen bg-black w-full">
-        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
+      <div className="admin-main flex flex-col min-h-screen bg-black w-full">
+        <header className="admin-header sticky top-0 z-30 border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 py-4">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-3 flex-1 max-w-xl">
@@ -260,8 +275,17 @@ export default function DashboardLayout({
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
               </button>
-              <button className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
-                <Sun className="w-5 h-5" />
+              <button
+                onClick={toggleTheme}
+                className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+                title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
               </button>
               <div className="relative">
                 <button

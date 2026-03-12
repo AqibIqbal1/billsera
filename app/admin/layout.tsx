@@ -10,10 +10,10 @@ import {
   Settings,
   LogOut,
   Menu,
-  X,
   Search,
   Bell,
   Sun,
+  Moon,
   ChevronDown,
 } from "lucide-react";
 import { getToken, removeToken } from "@/lib/auth";
@@ -36,6 +36,7 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     setMounted(true);
@@ -45,8 +46,20 @@ export default function AdminLayout({
     if (mounted && typeof window !== "undefined") {
       const stored = localStorage.getItem("billsera_admin_sidebar_collapsed");
       if (stored !== null) setSidebarCollapsed(stored === "true");
+      const t = localStorage.getItem("billsera_theme");
+      if (t === "light" || t === "dark") setTheme(t);
     }
   }, [mounted]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      if (typeof window !== "undefined") {
+        localStorage.setItem("billsera_theme", next);
+      }
+      return next;
+    });
+  };
 
   const toggleSidebar = () => {
     setSidebarCollapsed((prev) => {
@@ -65,13 +78,14 @@ export default function AdminLayout({
 
   return (
     <div
-      className={`min-h-screen bg-black text-zinc-100 overflow-x-hidden md:overflow-x-visible ${
+      className={`admin-panel min-h-screen bg-black text-zinc-100 overflow-x-hidden md:overflow-x-visible ${
         sidebarCollapsed ? "md:pl-20" : "md:pl-64"
       }`}
+      data-theme={theme}
     >
       {/* Sidebar - desktop (collapsible, fixed) */}
       <aside
-        className={`hidden md:flex fixed inset-y-0 left-0 flex-col border-r border-white/6 bg-zinc-950 transition-[width] duration-200 ${
+        className={`admin-sidebar-desktop hidden md:flex fixed inset-y-0 left-0 flex-col border-r border-white/6 bg-zinc-950 transition-[width] duration-200 ${
           sidebarCollapsed ? "w-20" : "w-64"
         }`}
       >
@@ -157,12 +171,12 @@ export default function AdminLayout({
       {/* Mobile sidebar (overlay) */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-40 md:hidden"
+          className="admin-overlay fixed inset-0 bg-black/60 z-40 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 flex flex-col bg-zinc-950 border-r border-white/6 transform transition-transform md:hidden ${
+        className={`admin-sidebar-mobile fixed top-0 left-0 z-50 h-full w-64 flex flex-col bg-zinc-950 border-r border-white/6 transform transition-transform md:hidden ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -183,7 +197,7 @@ export default function AdminLayout({
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
-                  isActive ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg:white/5"
+                  isActive ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-white/5"
                 }`}
               >
                 <item.icon className="w-5 h-5" />
@@ -198,9 +212,9 @@ export default function AdminLayout({
               removeToken();
               window.location.href = "/login";
             }}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-zinc-400 hover:text:white hover:bg:white/5 text-sm font-medium"
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 text-sm font-medium"
           >
-            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items:center justify-center text-red-400 font-bold text-sm">
+            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold text-sm">
               N
             </div>
             Logout
@@ -209,8 +223,8 @@ export default function AdminLayout({
       </aside>
 
       {/* Main content */}
-      <div className="flex flex-col min-h-screen bg-black w-full">
-        <header className="sticky top-0 z-30 border-b border-white/6 bg-black/90 backdrop-blur-xl">
+      <div className="admin-main flex flex-col min-h-screen bg-black w-full">
+        <header className="admin-header sticky top-0 z-30 border-b border-white/6 bg-black/90 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 py-4">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-3 flex-1 max-w-xl">
@@ -238,13 +252,22 @@ export default function AdminLayout({
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
               </button>
-              <button className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
-                <Sun className="w-5 h-5" />
+              <button
+                onClick={toggleTheme}
+                className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+                title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5" />
+                ) : (
+                  <Moon className="w-5 h-5" />
+                )}
               </button>
               <div className="relative">
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:bg:white/5"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:bg-white/5"
                 >
                   <span className="text-sm font-medium">Super Admin</span>
                   <ChevronDown className="w-4 h-4" />
@@ -261,7 +284,7 @@ export default function AdminLayout({
                           removeToken();
                           window.location.href = "/login";
                         }}
-                        className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg:white/5 rounded-lg"
+                        className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg"
                       >
                         <LogOut className="w-4 h-4" />
                         Sign out

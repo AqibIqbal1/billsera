@@ -52,14 +52,14 @@ export default function DashboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/dashboard/invoices/new"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-800 text-white font-medium hover:bg-zinc-700 transition-colors text-sm border border-white/[0.06]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500 text-white font-medium hover:bg-violet-400 transition-colors text-sm"
           >
             <Plus className="w-4 h-4" />
             New Invoice
           </Link>
           <Link
             href="/dashboard/clients"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-800 text-white font-medium hover:bg-zinc-700 transition-colors text-sm border border-white/[0.06]"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl surface text-sm font-medium text-zinc-100 hover:bg-white/5 transition-colors"
           >
             <UserPlus className="w-4 h-4" />
             Add Client

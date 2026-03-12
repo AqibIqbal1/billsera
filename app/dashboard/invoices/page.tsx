@@ -2,15 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  FileText,
-  Plus,
-  Search,
-  MoreHorizontal,
-  Send,
-  Eye,
-  Copy,
-} from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { DataTable, type DataTableRow } from "@/components/data-table";
 
 // Mock data – replace with API
@@ -93,6 +85,7 @@ export default function InvoicesPage() {
       {/* Table card using shared DataTable */}
       <DataTable
         columns={[
+          { key: "sno", header: "S.No"},
           { key: "invoice", header: "Invoice" },
           { key: "client", header: "Client" },
           { key: "amount", header: "Amount" },
@@ -101,28 +94,28 @@ export default function InvoicesPage() {
           { key: "actions", header: "Actions", align: "right" },
         ]}
         rows={
-          filtered.map<DataTableRow>((inv) => ({
+          filtered.map<DataTableRow>((inv, index) => ({
             id: inv.id,
             cells: {
+              sno: (
+                <span className="text-zinc-500 tabular-nums">{index + 1}</span>
+              ),
               invoice: (
                 <Link
                   href={`/dashboard/invoices/${inv.id}`}
-                  className="flex items-center gap-3 group"
+                  className="flex flex-col group"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-zinc-900 flex items-center justify-center border border-white/[0.06]">
-                    <FileText className="w-4 h-4 text-violet-400" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-medium text-zinc-100 group-hover:text-violet-400 transition-colors">
-                      {inv.id}
-                    </span>
-                    <span className="text-[11px] text-zinc-500">
-                      #{inv.id.slice(-3)}
-                    </span>
-                  </div>
+                  <span className="font-medium text-zinc-100 group-hover:text-violet-400 transition-colors">
+                    {inv.id}
+                  </span>
+                  <span className="text-[11px] text-zinc-500">
+                    #{inv.id.slice(-3)}
+                  </span>
                 </Link>
               ),
-              client: <span className="text-zinc-300">{inv.client}</span>,
+              client: (
+                <span className="text-sm text-zinc-400">{inv.client}</span>
+              ),
               amount: (
                 <span className="font-medium text-zinc-100">
                   ${inv.amount.toLocaleString()}
@@ -130,7 +123,7 @@ export default function InvoicesPage() {
               ),
               status: (
                 <span
-                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium ${
+                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium capitalize ${
                     statusStyles[inv.status] || ""
                   }`}
                 >
@@ -138,37 +131,17 @@ export default function InvoicesPage() {
                 </span>
               ),
               date: (
-                <span className="text-zinc-400 text-xs">
+                <span className="text-zinc-400 text-sm">
                   {new Date(inv.date).toLocaleDateString()}
                 </span>
               ),
               actions: (
-                <div className="inline-flex items-center gap-1">
-                  <button
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800"
-                    title="Send"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
-                  <button
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800"
-                    title="View"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800"
-                    title="Duplicate"
-                  >
-                    <Copy className="w-4 h-4" />
-                  </button>
-                  <button
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800"
-                    title="More"
-                  >
-                    <MoreHorizontal className="w-4 h-4" />
-                  </button>
-                </div>
+                <Link
+                  href={`/dashboard/invoices/${inv.id}`}
+                  className="text-sm font-medium text-violet-400 hover:text-violet-300"
+                >
+                  View
+                </Link>
               ),
             },
           })) as DataTableRow[]
