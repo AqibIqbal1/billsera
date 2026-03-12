@@ -15,6 +15,7 @@ import {
   Sun,
   Moon,
   ChevronDown,
+  Clock,
 } from "lucide-react";
 import { getToken, removeToken } from "@/lib/auth";
 
@@ -22,6 +23,7 @@ const navItems = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/subscriptions", label: "Subscriptions", icon: Settings },
+  { href: "/admin/activity", label: "Activity", icon: Clock },
   { href: "/admin/waitlist", label: "Waitlist", icon: Users },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
@@ -236,7 +238,7 @@ export default function AdminLayout({
                   <input
                     type="search"
                     placeholder="Search across platform..."
-                    className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/[0.06] text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
+                    className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/6 text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
                   />
                 </div>
               </div>
