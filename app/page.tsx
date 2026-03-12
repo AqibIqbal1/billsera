@@ -57,7 +57,7 @@ const Nav = () => (
           href="#waitlist"
           className="px-5 py-2.5 rounded-xl bg-violet-500 text-white text-sm font-bold hover:bg-violet-400 transition-colors"
         >
-          Get started
+          Join Waitlist
         </Link>
       </div>
     </nav>
@@ -351,9 +351,8 @@ const WaitlistSection = () => {
 
         {message && (
           <p
-            className={`mt-4 text-sm ${
-              status === "success" ? "text-emerald-400" : "text-red-400"
-            }`}
+            className={`mt-4 text-sm ${status === "success" ? "text-emerald-400" : "text-red-400"
+              }`}
           >
             {message}
           </p>
