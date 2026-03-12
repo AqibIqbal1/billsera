@@ -91,7 +91,7 @@ export default function AdminLayout({
           sidebarCollapsed ? "w-20" : "w-64"
         }`}
       >
-        <div className="p-4 border-b border-white/6 flex items-center justify-between min-w-0">
+        <div className="h-16 px-4 border-b border-white/6 flex items-center justify-between min-w-0">
           {sidebarCollapsed ? (
             <button
               onClick={toggleSidebar}
@@ -180,7 +180,7 @@ export default function AdminLayout({
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-5 border-b border-white/6 flex items-center justify-between">
+        <div className="h-16 px-5 border-b border-white/6 flex items-center justify-between">
           <Link href="/admin" className="flex items-center gap-2">
             <Zap className="w-6 h-6 text-violet-500" />
             <span className="font-bold">Billsera Admin</span>
@@ -223,7 +223,7 @@ export default function AdminLayout({
       {/* Main content */}
       <div className="admin-main flex flex-col min-h-screen bg-black w-full">
         <header className="admin-header sticky top-0 z-30 border-b border-white/6 bg-black/90 backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 h-16">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-3 flex-1 max-w-xl">
               <button

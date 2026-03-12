@@ -115,6 +115,11 @@
   border-color: #e4e4e7;
 }
 
+/* Any sidebar borders that still use border-white/6 (admin or dashboard) */
+.admin-panel[data-theme="light"] aside .border-white\/6 {
+  border-color: #e4e4e7;
+}
+
 .admin-panel[data-theme="light"] .admin-sidebar-desktop a,
 .admin-panel[data-theme="light"] .admin-sidebar-desktop button,
 .admin-panel[data-theme="light"] .admin-sidebar-mobile a,
@@ -166,6 +171,11 @@
   background: rgba(255, 255, 255, 0.9);
   border-color: #e4e4e7;
   color: #18181b;
+}
+
+/* Dark mode: make header bottom border more visible */
+.admin-panel[data-theme="dark"] .admin-header {
+  border-color: #27272a;
 }
 
 .admin-panel[data-theme="light"] .admin-header input {

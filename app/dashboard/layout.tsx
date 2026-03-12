@@ -102,11 +102,11 @@ export default function DashboardLayout({
     >
       {/* Sidebar - desktop (collapsible, fixed) */}
       <aside
-        className={`hidden md:flex fixed inset-y-0 left-0 flex-col border-r border-white/[0.06] bg-zinc-950 transition-[width] duration-200 ${
+        className={`hidden md:flex fixed inset-y-0 left-0 flex-col border-r border-white/6 bg-zinc-950 transition-[width] duration-200 ${
           sidebarCollapsed ? "w-20" : "w-64"
         }`}
       >
-        <div className="p-4 border-b border-white/[0.06] flex items-center justify-between min-w-0">
+        <div className="h-16 px-4 border-b border-white/6 flex items-center justify-between min-w-0">
           {sidebarCollapsed ? (
             <button
               onClick={toggleSidebar}
@@ -137,7 +137,7 @@ export default function DashboardLayout({
           )}
         </div>
 
-        <nav className="flex-1 p-3 space-y-0.5 overflow-hidden border-t border-white/[0.06]">
+        <nav className="flex-1 p-3 space-y-0.5 overflow-hidden border-t border-white/6">
           {navItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -164,7 +164,7 @@ export default function DashboardLayout({
           })}
         </nav>
 
-        <div className="p-3 border-t border-white/[0.06]">
+        <div className="p-3 border-t border-white/6">
           <button
             onClick={() => {
               removeToken();
@@ -191,11 +191,11 @@ export default function DashboardLayout({
         />
       )}
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 flex flex-col bg-zinc-950 border-r border-white/[0.06] transform transition-transform md:hidden ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 flex flex-col bg-zinc-950 border-r border-white/6 transform transition-transform md:hidden ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-5 border-b border-white/[0.06] flex items-center justify-between">
+        <div className="h-16 px-5 border-b border-white/6 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
             <Zap className="w-6 h-6 text-violet-500" />
             <span className="font-bold">Billsera</span>
@@ -243,8 +243,8 @@ export default function DashboardLayout({
 
       {/* Main content – padding-left on root handles sidebar space */}
       <div className="admin-main flex flex-col min-h-screen bg-black w-full">
-        <header className="admin-header sticky top-0 z-30 border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 py-4">
+        <header className="admin-header sticky top-0 z-30 border-b border-white/6 bg-black/90 backdrop-blur-xl">
+          <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 h-16">
             {/* Left: mobile menu + search */}
             <div className="flex items-center gap-3 flex-1 max-w-xl">
               <button
@@ -259,7 +259,7 @@ export default function DashboardLayout({
                   <input
                     type="search"
                     placeholder="Search across platform..."
-                    className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/[0.06] text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
+                    className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/6 text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
                   />
                 </div>
               </div>
@@ -297,7 +297,7 @@ export default function DashboardLayout({
                       className="fixed inset-0 z-10"
                       onClick={() => setUserMenuOpen(false)}
                     />
-                    <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/[0.06] shadow-xl z-20">
+                    <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/6 shadow-xl z-20">
                       <button
                         onClick={() => {
                           removeToken();
