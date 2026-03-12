@@ -21,6 +21,7 @@ import { getToken, removeToken } from "@/lib/auth";
 const navItems = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/users", label: "Users", icon: Users },
+  { href: "/admin/subscriptions", label: "Subscriptions", icon: Settings },
   { href: "/admin/waitlist", label: "Waitlist", icon: Users },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
@@ -254,7 +255,7 @@ export default function AdminLayout({
                       className="fixed inset-0 z-10"
                       onClick={() => setUserMenuOpen(false)}
                     />
-                    <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/[0.06] shadow-xl z-20">
+                    <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/6 shadow-xl z-20">
                       <button
                         onClick={() => {
                           removeToken();
