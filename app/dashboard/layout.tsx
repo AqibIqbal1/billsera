@@ -80,7 +80,11 @@ export default function DashboardLayout({
   // }
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100">
+    <div
+      className={`min-h-screen bg-black text-zinc-100 overflow-x-hidden md:overflow-x-visible ${
+        sidebarCollapsed ? "md:pl-20" : "md:pl-64"
+      }`}
+    >
       {/* Sidebar - desktop (collapsible, fixed) */}
       <aside
         className={`hidden md:flex fixed inset-y-0 left-0 flex-col border-r border-white/[0.06] bg-zinc-950 transition-[width] duration-200 ${
@@ -226,69 +230,72 @@ export default function DashboardLayout({
         </div>
       </aside>
 
-      {/* Main content – margin-left matches sidebar width on desktop */}
-      <div
-        className={`flex flex-col min-h-screen bg-black ${
-          sidebarCollapsed ? "md:ml-20" : "md:ml-64"
-        }`}
-      >
-        <header className="sticky top-0 z-30 flex items-center gap-4 px-4 md:px-6 lg:px-8 py-4 border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-          <div className="flex-1 max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
-              <input
-                type="search"
-                placeholder="Search across platform..."
-                className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/[0.06] text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
-              />
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="relative p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
-            </button>
-            <button className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
-              <Sun className="w-5 h-5" />
-            </button>
-            <div className="relative">
+      {/* Main content – padding-left on root handles sidebar space */}
+      <div className="flex flex-col min-h-screen bg-black w-full">
+        <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-black/90 backdrop-blur-xl">
+          <div className="flex items-center justify-between gap-4 px-4 md:px-6 lg:px-8 py-4">
+            {/* Left: mobile menu + search */}
+            <div className="flex items-center gap-3 flex-1 max-w-xl">
               <button
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:bg-white/5"
+                onClick={() => setSidebarOpen(true)}
+                className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5"
               >
-                <span className="text-sm font-medium">Admin</span>
-                <ChevronDown className="w-4 h-4" />
+                <Menu className="w-6 h-6" />
               </button>
-              {userMenuOpen && (
-                <>
-                  <div
-                    className="fixed inset-0 z-10"
-                    onClick={() => setUserMenuOpen(false)}
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+                  <input
+                    type="search"
+                    placeholder="Search across platform..."
+                    className="w-full pl-12 pr-4 py-2.5 rounded-xl bg-zinc-900 border border-white/[0.06] text-zinc-100 placeholder:text-zinc-500 text-sm outline-none focus:border-violet-500/50"
                   />
-                  <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/[0.06] shadow-xl z-20">
-                    <button
-                      onClick={() => {
-                        removeToken();
-                        window.location.href = "/login";
-                      }}
-                      className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Sign out
-                    </button>
-                  </div>
-                </>
-              )}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: icons + admin menu */}
+            <div className="flex items-center gap-2">
+              <button className="relative p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
+              </button>
+              <button className="p-2.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5">
+                <Sun className="w-5 h-5" />
+              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:bg-white/5"
+                >
+                  <span className="text-sm font-medium">Admin</span>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+                {userMenuOpen && (
+                  <>
+                    <div
+                      className="fixed inset-0 z-10"
+                      onClick={() => setUserMenuOpen(false)}
+                    />
+                    <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/[0.06] shadow-xl z-20">
+                      <button
+                        onClick={() => {
+                          removeToken();
+                          window.location.href = "/login";
+                        }}
+                        className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign out
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </header>
-        <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-auto">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
           {children}
         </main>
       </div>
