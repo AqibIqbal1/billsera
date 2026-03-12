@@ -54,7 +54,7 @@ const Nav = () => (
           Log in
         </Link> */}
         <Link
-          href="/signup"
+          href="#waitlist"
           className="px-5 py-2.5 rounded-xl bg-violet-500 text-white text-sm font-bold hover:bg-violet-400 transition-colors"
         >
           Get started
