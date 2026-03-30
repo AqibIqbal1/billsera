@@ -145,7 +145,7 @@ const Features = () => {
     {
       icon: CreditCard,
       title: "Get paid instantly",
-      desc: "Stripe built in.",
+      desc: "Cards and bank transfers.",
     },
     {
       icon: Bell,
