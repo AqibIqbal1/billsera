@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Zap, Loader2 } from "lucide-react";
 import { authApi, type ApiError } from "@/lib/api";
-import { setToken } from "@/lib/auth";
+import { getPostAuthPath, setToken } from "@/lib/auth";
 
 export default function SignupPage() {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,16 +19,19 @@ export default function SignupPage() {
     setLoading(true);
     try {
       const res = await authApi.signup({ name, email, password });
-      setToken(res.token);
-      const role = res.user.role?.toLowerCase();
-      if (role === "admin" || role === "superadmin") {
-        router.push("/admin");
-      } else {
-        router.push("/dashboard");
+      if (!res?.token || !res?.user) {
+        setError("Invalid response from server");
+        return;
       }
+      await setToken(res.token);
+      window.location.replace(getPostAuthPath(res.user.role));
     } catch (err) {
       const apiErr = err as ApiError;
-      setError(apiErr.message || "Something went wrong");
+      setError(
+        err instanceof Error
+          ? err.message
+          : apiErr.message || "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
@@ -110,12 +111,12 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={8}
               autoComplete="new-password"
               placeholder="••••••••"
               className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-zinc-100 placeholder:text-zinc-500 outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/20 transition-all"
             />
-            <p className="mt-1 text-xs text-zinc-500">At least 6 characters</p>
+            <p className="mt-1 text-xs text-zinc-500">At least 8 characters</p>
           </div>
 
           <button

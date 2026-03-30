@@ -19,8 +19,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Settings,
+  Loader2,
 } from "lucide-react";
-import { getToken, removeToken } from "@/lib/auth";
+import { useLogout } from "@/lib/use-logout";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -35,11 +36,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { logout, loggingOut } = useLogout();
   const [mounted, setMounted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     setMounted(true);
@@ -73,26 +75,6 @@ export default function DashboardLayout({
       return next;
     });
   };
-
-  const token = mounted ? getToken() : null;
-
-  // if (mounted && !token) {
-  //   return (
-  //     <div className="min-h-screen bg-[#0a0a0b] flex items-center justify-center">
-  //       <div className="text-center">
-  //         <p className="text-zinc-400 mb-4">
-  //           You need to sign in to access your dashboard.
-  //         </p>
-  //         <Link
-  //           href="/login"
-  //           className="text-violet-400 hover:text-violet-300 font-medium"
-  //         >
-  //           Go to login
-  //         </Link>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div
@@ -167,18 +149,22 @@ export default function DashboardLayout({
 
         <div className="p-3 border-t border-white/6">
           <button
-            onClick={() => {
-              removeToken();
-              window.location.href = "/login";
-            }}
-            className={`flex items-center w-full rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors ${
+            onClick={logout}
+            disabled={loggingOut}
+            className={`flex items-center w-full rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 disabled:opacity-60 disabled:cursor-not-allowed transition-colors ${
               sidebarCollapsed ? "justify-center p-3" : "gap-3 px-4 py-3"
             }`}
             title={sidebarCollapsed ? "Logout" : undefined}
           >
-            <LogOut className="w-5 h-5 text-red-400 shrink-0" />
+            {loggingOut ? (
+              <Loader2 className="w-5 h-5 text-red-400 shrink-0 animate-spin" />
+            ) : (
+              <LogOut className="w-5 h-5 text-red-400 shrink-0" />
+            )}
             {!sidebarCollapsed && (
-              <span className="text-sm font-medium">Logout</span>
+              <span className="text-sm font-medium">
+                {loggingOut ? "Signing out…" : "Logout"}
+              </span>
             )}
           </button>
         </div>
@@ -230,14 +216,16 @@ export default function DashboardLayout({
         </nav>
         <div className="p-3">
           <button
-            onClick={() => {
-              removeToken();
-              window.location.href = "/login";
-            }}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 text-sm font-medium"
+            onClick={logout}
+            disabled={loggingOut}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 disabled:opacity-60 disabled:cursor-not-allowed text-sm font-medium"
           >
-            <LogOut className="w-5 h-5 text-red-400 shrink-0" />
-            Logout
+            {loggingOut ? (
+              <Loader2 className="w-5 h-5 text-red-400 shrink-0 animate-spin" />
+            ) : (
+              <LogOut className="w-5 h-5 text-red-400 shrink-0" />
+            )}
+            {loggingOut ? "Signing out…" : "Logout"}
           </button>
         </div>
       </aside>
@@ -300,14 +288,16 @@ export default function DashboardLayout({
                     />
                     <div className="absolute right-0 top-full mt-1 py-1 w-48 rounded-xl bg-zinc-900 border border-white/6 shadow-xl z-20">
                       <button
-                        onClick={() => {
-                          removeToken();
-                          window.location.href = "/login";
-                        }}
-                        className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg"
+                        onClick={logout}
+                        disabled={loggingOut}
+                        className="flex items-center gap-2 w-full px-4 py-2.5 text-left text-sm text-zinc-400 hover:text-white hover:bg-white/5 disabled:opacity-60 disabled:cursor-not-allowed rounded-lg"
                       >
-                        <LogOut className="w-4 h-4" />
-                        Sign out
+                        {loggingOut ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <LogOut className="w-4 h-4" />
+                        )}
+                        {loggingOut ? "Signing out…" : "Sign out"}
                       </button>
                     </div>
                   </>

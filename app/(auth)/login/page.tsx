@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Zap, Loader2 } from "lucide-react";
 import { authApi, type ApiError } from "@/lib/api";
-import { setToken } from "@/lib/auth";
+import { getLoginSuccessPath, setToken } from "@/lib/auth";
 
-export default function LoginPage() {
-  const router = useRouter();
+function LoginForm() {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -20,16 +20,20 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const res = await authApi.login({ email, password });
-      setToken(res.token);
-      const role = res.user.role?.toLowerCase();
-      if (role === "admin" || role === "superadmin") {
-        router.push("/admin");
-      } else {
-        router.push("/dashboard");
+      if (!res?.token || !res?.user) {
+        setError("Invalid response from server");
+        return;
       }
+      await setToken(res.token);
+      const next = getLoginSuccessPath(res.user.role, searchParams.get("from"));
+      window.location.replace(next);
     } catch (err) {
       const apiErr = err as ApiError;
-      setError(apiErr.message || "Invalid email or password");
+      setError(
+        err instanceof Error
+          ? err.message
+          : apiErr.message || "Invalid email or password"
+      );
     } finally {
       setLoading(false);
     }
@@ -117,5 +121,19 @@ export default function LoginPage() {
         </p>
       </div>
     </>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[320px] items-center justify-center text-zinc-500">
+          <Loader2 className="w-8 h-8 animate-spin" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

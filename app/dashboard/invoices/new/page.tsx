@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -33,7 +33,7 @@ const labelClass = "block text-sm font-medium text-zinc-400 mb-1.5";
 const sectionBadge =
   "w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center shrink-0";
 
-export default function NewInvoicePage() {
+function NewInvoiceForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clientIdFromQuery = searchParams.get("client");
@@ -509,5 +509,19 @@ export default function NewInvoicePage() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function NewInvoicePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[40vh] flex items-center justify-center text-zinc-500 text-sm">
+          Loading…
+        </div>
+      }
+    >
+      <NewInvoiceForm />
+    </Suspense>
   );
 }
